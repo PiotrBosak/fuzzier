@@ -28,12 +28,13 @@ open class Fuzzier : FuzzyAction() {
     private var defaultDoc: Document? = null
     open var title: String = "Fuzzy Search"
     private val fuzzyDimensionKey: String = "FuzzySearchPopup"
+
     // Used by FuzzierVCS to check if files are tracked by the VCS
     protected var changeListManager: ChangeListManager? = null
 
     override fun actionPerformed(actionEvent: AnActionEvent) {
-       setCustomHandlers()
-       ApplicationManager.getApplication().invokeLater {
+        setCustomHandlers()
+        ApplicationManager.getApplication().invokeLater {
             defaultDoc = EditorFactory.getInstance().createDocument("")
             actionEvent.project?.let { project ->
                 component = FuzzyFinderComponent(project)
@@ -180,9 +181,17 @@ open class Fuzzier : FuzzyAction() {
 
         // Add a listener that opens the currently selected file when pressing enter (focus on the text box)
         val enterKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0)
+        val CLEAR = KeyStroke.getKeyStroke(KeyEvent.VK_U, KeyEvent.CTRL_DOWN_MASK)
         val enterActionKey = "openFile"
+        val clearActionKey = "clearInput"
         val inputMap = component.searchField.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
         inputMap.put(enterKeyStroke, enterActionKey)
+        inputMap.put(CLEAR, clearActionKey)
+        component.searchField.actionMap.put(clearActionKey, object : AbstractAction() {
+            override fun actionPerformed(e: ActionEvent?) {
+                component.searchField.text = ""
+            }
+        })
         component.searchField.actionMap.put(enterActionKey, object : AbstractAction() {
             override fun actionPerformed(e: ActionEvent?) {
                 val selectedValue = component.fileList.selectedValue?.filePath
