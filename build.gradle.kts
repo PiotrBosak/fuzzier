@@ -24,7 +24,7 @@ tasks.test {
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-  version.set("2024.1")
+  version.set("2023.2")
   plugins.set(listOf(/* Plugin Dependencies */))
 }
 
@@ -34,7 +34,7 @@ tasks {
   }
 
   patchPluginXml {
-    sinceBuild.set("241")
+    sinceBuild.set("232")
   }
 
   signPlugin {
