@@ -59,6 +59,7 @@ class FuzzierSettingsConfigurable : Configurable {
                 || state.matchWeightFilename != component.matchWeightFilename.getIntSpinner().value
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     override fun apply() {
         val newSet = component.exclusionSet.getJBTextArea().text
             .split("\n")

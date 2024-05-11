@@ -176,6 +176,7 @@ class FuzzierSettingsComponent {
             .panel
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     private fun setupComponents() {
         multiMatchActive.getCheckBox().addChangeListener {
             matchWeightSingleChar.getIntSpinner().isEnabled = multiMatchActive.getCheckBox().isSelected
